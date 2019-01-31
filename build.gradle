@@ -1,0 +1,57 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
+
+test{
+    testLogging {
+        showStandardStreams=true
+    }
+}
+
+project.ext {
+    cucumberVersion = '2.3.1'
+    junitVersion = '4.12'
+    seleniumVersion = '3.141.59'
+}
+
+sourceCompatibility = 1.10
+targetCompatibility = 1.10
+
+dependencies {
+    compile "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+
+
+    testCompile "org.seleniumhq.selenium:selenium-chrome-driver:${seleniumVersion}"
+    testCompile "org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}"
+    testCompile "org.seleniumhq.selenium:selenium-api:${seleniumVersion}"
+    testCompile "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
+
+
+
+    testCompile 'org.mockito:mockito-core:2.7.22'
+    testCompile 'junit:junit:' + junitVersion
+}
+
+repositories {
+    mavenCentral()
+}
