@@ -21,7 +21,12 @@ dependencyManagement {
     }
 }
 
+task installChromeDriver(type: Exec) {
+    commandLine './download_chrome_driver.sh'
+}
+
 test{
+    dependsOn installChromeDriver
     testLogging {
         showStandardStreams=true
     }

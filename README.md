@@ -1,13 +1,28 @@
+## Overview
 This is a trivial example that demonstrates mixing Spring Security with Spring CORS support.
 
 This example is hard-coded to use headless chrome. You'll need to have chrome version 71+ installed.
 
-Preparing to Run Integration Test:
-Run a script (One time only, though rerunning won't hurt)
+## Notes
+
+### Running Integration Test:
+This solution uses chromedriver to execute javascript in the project.
+
+Chromedriver requres chrome version 71+ to be installed. Chrome is
+not automatically installed.
+
+Chromedriver is automatically installed in the .libs directory 
+(which is in the .gitignore).
+
+You can manually install it:
 ```./download_chrome_driver.sh```
 
-This creates a libs directory (ignored by git) with chromedriver. It should select your
-OS and download the correct version (only verified on Linux, probably works on Mac, defaults to Windows otherwise).
+However, when running tests, this script is automatically run every time.
+The script only downloads the driver if it is missing from the ./libs 
+directory.
+
+This download the correct version based on your current OS (only 
+verified on Linux, Mac, and Windows 10).
 
 Run the tests:
 ```./gradlew test```
