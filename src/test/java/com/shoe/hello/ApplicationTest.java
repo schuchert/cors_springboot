@@ -17,6 +17,8 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.context.ConfigurableApplicationContext;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
@@ -46,10 +48,14 @@ public class ApplicationTest {
     @Before
     public void setup() {
         ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.addArguments("--headless");
+        chromeOptions.addArguments("--headless");
         String pathToChromeDriver = "libs/chromedriver";
         System.setProperty("webdriver.chrome.driver", pathToChromeDriver);
+        final PrintStream originalSystemErr = System.err;
+        final PrintStream ignoredOut = new PrintStream(new ByteArrayOutputStream());
+        System.setErr(ignoredOut);
         driver = new ChromeDriver(chromeOptions);
+        System.setErr(originalSystemErr);
         navigateTo(BASE_URL);
     }
 
@@ -81,7 +87,6 @@ public class ApplicationTest {
 
     private void elementWithIdMatches(String cssClass, String pattern) {
         final String value = textByCssClass(cssClass);
-        System.err.println(value);
         assertTrue(value, value.matches(pattern));
     }
 
