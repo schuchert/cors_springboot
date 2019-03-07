@@ -1,10 +1,7 @@
 package com.shoe.hello;
 
 import com.google.common.base.Function;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -33,7 +30,7 @@ public class ApplicationTest {
     public static final String MESSAGE_CLASS = "hello-world-message";
     public static final String EMPTY = "^$";
 
-    private ChromeDriver driver;
+    private static ChromeDriver driver;
 
     @BeforeClass
     public static void initSpring() {
@@ -45,8 +42,8 @@ public class ApplicationTest {
         assertEquals(SERVER_PORT, Integer.parseInt(serverPort));
     }
 
-    @Before
-    public void setup() {
+    @BeforeClass
+    public static void setup() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
         String pathToChromeDriver = "libs/chromedriver";
@@ -59,8 +56,8 @@ public class ApplicationTest {
         navigateTo(BASE_URL);
     }
 
-    @After
-    public void cleanup() {
+    @AfterClass
+    public static void cleanup() {
         driver.quit();
     }
 
@@ -112,7 +109,7 @@ public class ApplicationTest {
         });
     }
 
-    public void navigateTo(String page) {
+    public static void navigateTo(String page) {
         driver.navigate().to(page);
         Wait<WebDriver> wait = new WebDriverWait(driver, 30);
         wait.until(driver -> String
