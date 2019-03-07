@@ -55,7 +55,7 @@ public class ApplicationTest {
 
     @After
     public void cleanup() {
-        driver.close();
+        driver.quit();
     }
 
     @Test
