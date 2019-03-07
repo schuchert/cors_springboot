@@ -1,3 +1,5 @@
+---
+---
 ## Overview
 This is a trivial example that demonstrates mixing Spring Security with Spring CORS support.
 
@@ -21,7 +23,7 @@ However, when running tests, this script is automatically run every time.
 The script only downloads the driver if it is missing from the ./libs 
 directory.
 
-This download the correct version based on your current OS (only 
+This downloads the correct version based on your current OS (only
 verified on Linux, Mac, and Windows 10).
 
 Run the tests:
