@@ -1,7 +1,8 @@
 package com.shoe.hello;
 
-import com.google.common.base.Function;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -12,34 +13,29 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.context.ConfigurableApplicationContext;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.function.Function;
 
-import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class ApplicationTest {
-    public static final int CLIENT_PORT = 9000;
-    public static final int SERVER_PORT = 8080;
-    public static final String BASE_URL = "http://localhost:" + CLIENT_PORT + "/index.html";
-    public static final String ID_CLASS = "hello-world-id";
-    public static final String MESSAGE_CLASS = "hello-world-message";
-    public static final String EMPTY = "^$";
+    private static final int CLIENT_PORT = 9000;
+    private static final int SERVER_PORT = 8080;
+    private static final String ID_CLASS = "hello-world-id";
+    private static final String MESSAGE_CLASS = "hello-world-message";
+    private static final String EMPTY = "^$";
 
     private static ChromeDriver driver;
+    private static TestApplicationContext client;
 
     @BeforeClass
     public static void initSpring() {
-        final ConfigurableApplicationContext client = SpringApplication.start(CLIENT_PORT);
-        final String clientPort = client.getEnvironment().getProperty("local.server.port");
-        final ConfigurableApplicationContext server = SpringApplication.start(SERVER_PORT);
-        final String serverPort = server.getEnvironment().getProperty("local.server.port");
-        assertEquals(CLIENT_PORT, Integer.parseInt(clientPort));
-        assertEquals(SERVER_PORT, Integer.parseInt(serverPort));
+        client = new TestApplicationContext(CLIENT_PORT);
+        new TestApplicationContext(SERVER_PORT);
     }
 
     @BeforeClass
@@ -53,7 +49,7 @@ public class ApplicationTest {
         System.setErr(ignoredOut);
         driver = new ChromeDriver(chromeOptions);
         System.setErr(originalSystemErr);
-        navigateTo(BASE_URL);
+        navigateTo(client.urlFor("index.html"));
     }
 
     @AfterClass
@@ -109,7 +105,7 @@ public class ApplicationTest {
         });
     }
 
-    public static void navigateTo(String page) {
+    private static void navigateTo(String page) {
         driver.navigate().to(page);
         Wait<WebDriver> wait = new WebDriverWait(driver, 30);
         wait.until(driver -> String

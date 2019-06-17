@@ -10,17 +10,19 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.Assert.assertEquals;
 
 public class CorsSteps {
+    private TestApplicationContext server;
 
     private ResponseEntity<String> responseEntity;
 
     @Given("the system is running")
     public void theSystemIsRunning() {
-        TestApplicationContext.getBean(HelloWorldController.class);
+        if(server == null)
+            server = new TestApplicationContext();
     }
 
     @When("making a non-core request")
     public void makingANonCoreRequest() {
-        responseEntity = TestApplicationContext.restCall("greeting", HttpMethod.GET, String.class);
+        responseEntity = server.restCall("greeting", HttpMethod.GET, String.class);
     }
 
     @Then("the result should be swell")
