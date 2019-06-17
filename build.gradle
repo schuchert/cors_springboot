@@ -38,8 +38,8 @@ project.ext {
     seleniumVersion = '3.141.59'
 }
 
-sourceCompatibility = 1.10
-targetCompatibility = 1.10
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-web-services:${springBootVersion}"
@@ -51,10 +51,12 @@ dependencies {
     testCompile "org.seleniumhq.selenium:selenium-api:${seleniumVersion}"
     testCompile "org.seleniumhq.selenium:selenium-java:${seleniumVersion}"
 
-
-
-    testCompile 'org.mockito:mockito-core:2.7.22'
+    testImplementation 'org.mockito:mockito-core:2.7.22'
     testCompile 'junit:junit:' + junitVersion
+
+    testImplementation 'io.cucumber:cucumber-junit:4.3.0'
+    testImplementation 'io.cucumber:cucumber-java:4.3.0'
+    testImplementation 'org.mockito:mockito-core:2.27.0'
 }
 
 repositories {
