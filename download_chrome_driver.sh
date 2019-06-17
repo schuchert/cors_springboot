@@ -1,7 +1,8 @@
 #!/bin/bash
 
 if [ ! -f ./libs/chromedriver ]; then
-    version='75.0.3770.90'
+    version=`google-chrome --version | awk '{ print $3; }'`
+
     os=`uname`
     
     case $os in
