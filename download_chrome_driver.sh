@@ -1,13 +1,15 @@
 #!/bin/bash
 
+
 if [ ! -f ./libs/chromedriver ]; then
-    version=`google-chrome --version | awk '{ print $3; }'`
+    version='75.0.3770.90'
 
     os=`uname`
     
     case $os in
     Linux)
       name='linux64'
+      version=`google-chrome --version | awk '{ print $3; }'`
     ;;
     Darwin)
       name='mac64'
